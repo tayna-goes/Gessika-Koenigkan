@@ -259,15 +259,27 @@
             </div>
         </section>
 
+        <!-- ==========================================================
+             GALERIA
+        ========================================================== -->
+
         <section class="section gallery-section" id="galeria">
 
             <div class="container">
 
+                <!-- ==================================================
+                     CABEÇALHO
+                =================================================== -->
+
                 <div class="section-heading">
-                    <p class="section-label">Momentos</p>
+
+                    <p class="section-label">
+                        Momentos
+                    </p>
 
                     <h2 class="section-title">
-                        <em>Música que faz parte da história.</em>
+                        Música que faz parte
+                        <em>da história.</em>
                     </h2>
 
                     <p>
@@ -275,72 +287,112 @@
                         A música transforma cada entrada, cada olhar
                         e cada momento em uma lembrança ainda mais especial.
                     </p>
+
                 </div>
 
+
+                <!-- ==================================================
+                     GALERIA
+                =================================================== -->
 
                 <div class="gallery" id="gallery">
 
-                    <!-- FOTO -->
-                    <figure class="gallery-item gallery-item--featured" data-type="image" data-src="./images/2.jpeg">
+
+                    <!-- ==================================================
+                         FOTO 01 — DESTAQUE
+                    =================================================== -->
+
+                    <figure class="gallery-item gallery-item--featured reveal" data-type="image" data-src="./images/2.jpeg">
+
                         <img src="./images/2.jpeg" alt="Músicos durante uma cerimônia de casamento" loading="lazy">
 
-                        <span class="gallery-item-icon">
+                        <span class="gallery-item-icon" aria-hidden="true">
                             <i class="fa-solid fa-expand"></i>
                         </span>
+
                     </figure>
 
 
-                    <!-- FOTO -->
-                    <figure class="gallery-item" data-type="image" data-src="./images/1.jpeg">
+                    <!-- ==================================================
+                         FOTO 02
+                    =================================================== -->
+
+                    <figure class="gallery-item reveal" data-type="image" data-src="./images/1.jpeg">
+
                         <img src="./images/1.jpeg" alt="Apresentação musical em cerimônia" loading="lazy">
 
-                        <span class="gallery-item-icon">
+                        <span class="gallery-item-icon" aria-hidden="true">
                             <i class="fa-solid fa-expand"></i>
                         </span>
+
                     </figure>
 
 
-                    <!-- FOTO -->
-                    <figure class="gallery-item" data-type="image" data-src="./images/4.jpeg">
+                    <!-- ==================================================
+                         FOTO 03
+                    =================================================== -->
+
+                    <figure class="gallery-item reveal" data-type="image" data-src="./images/4.jpeg">
+
                         <img src="./images/4.jpeg" alt="Músicos durante apresentação" loading="lazy">
 
-                        <span class="gallery-item-icon">
+                        <span class="gallery-item-icon" aria-hidden="true">
                             <i class="fa-solid fa-expand"></i>
                         </span>
+
                     </figure>
 
 
-                    <figure class="gallery-item gallery-item--video" data-type="video" data-src="./images/video1.mp4" >
-                        <video
-                            src="./images/video1.mp4"
-                            muted
-                            playsinline
-                            preload="metadata"
-                        ></video>
+                    <!-- ==================================================
+                         VÍDEO 01
 
-                        <span class="gallery-item-icon">
+                         A imagem abaixo é a CAPA.
+                         O MP4 somente será aberto ao clicar.
+                    =================================================== -->
+
+                    <figure class="gallery-item gallery-item--video reveal" data-type="video" data-src="./images/video1.mp4">
+
+                        <img src="./images/preview-video1.png" alt="Vídeo de apresentação musical" loading="lazy">
+
+                        <span class="gallery-item-icon" aria-hidden="true">
                             <i class="fa-solid fa-play"></i>
                         </span>
+
                     </figure>
 
-                    <figure class="gallery-item gallery-item--video" data-type="video" data-src="./images/video1.mp4">
-                        <video src="./images/video2.mp4" muted playsinline preload="metadata"></video>
 
-                        <span class="gallery-item-icon">
+                    <!-- ==================================================
+                         VÍDEO 02
+                    =================================================== -->
+
+                    <figure class="gallery-item gallery-item--video reveal" data-type="video" data-src="./images/video2.mp4">
+
+                        <img src="./images/preview-video2.png" alt="Vídeo de apresentação musical" loading="lazy">
+
+                        <span class="gallery-item-icon" aria-hidden="true">
                             <i class="fa-solid fa-play"></i>
                         </span>
+
                     </figure>
+
 
                 </div>
 
 
-                <!-- Indicador mobile -->
-                <div class="gallery-mobile-hint">
+                <!-- ==================================================
+                     INDICADOR DO CARROSSEL — MOBILE
+                =================================================== -->
+
+                <div class="gallery-mobile-hint" aria-hidden="true">
+
                     <i class="fa-solid fa-arrow-left"></i>
 
-                    <span>Deslize para ver mais</span>
+                    <span>
+                        Deslize para ver mais
+                    </span>
 
                     <i class="fa-solid fa-arrow-right"></i>
+
                 </div>
 
             </div>
@@ -349,36 +401,76 @@
 
 
         <!-- ==========================================================
-             LIGHTBOX
+             LIGHTBOX DA GALERIA
         ========================================================== -->
 
         <div class="gallery-lightbox" id="galleryLightbox" aria-hidden="true">
 
+            <!-- ======================================================
+                 FUNDO
+            ======================================================= -->
+
             <div class="gallery-lightbox-backdrop" data-close-gallery></div>
 
 
-            <div class="gallery-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Visualização da galeria">
+            <!-- ======================================================
+                 JANELA DO LIGHTBOX
+            ======================================================= -->
 
-                <button type="button" class="gallery-lightbox-close" id="galleryLightboxClose" aria-label="Fechar imagem">
-                    <i class="fa-solid fa-xmark"></i>
+            <div class="gallery-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Visualização dos momentos">
+
+
+                <!-- ==================================================
+                     BOTÃO FECHAR
+                =================================================== -->
+
+                <button type="button" class="gallery-lightbox-close" id="galleryLightboxClose" aria-label="Fechar galeria">
+
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+
                 </button>
 
 
-                <button type="button" class="gallery-lightbox-prev" id="galleryLightboxPrev" aria-label="Anterior">
-                    <i class="fa-solid fa-chevron-left"></i>
+                <!-- ==================================================
+                     BOTÃO ANTERIOR
+                =================================================== -->
+
+                <button type="button" class="gallery-lightbox-prev" id="galleryLightboxPrev" aria-label="Momento anterior">
+
+                    <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+
                 </button>
 
+
+                <!-- ==================================================
+                     CONTEÚDO
+
+                     O JavaScript insere aqui:
+
+                     - imagem
+                     - vídeo
+                =================================================== -->
 
                 <div class="gallery-lightbox-content" id="galleryLightboxContent"></div>
 
 
-                <button type="button" class="gallery-lightbox-next" id="galleryLightboxNext" aria-label="Próximo">
-                    <i class="fa-solid fa-chevron-right"></i>
+                <!-- ==================================================
+                     BOTÃO PRÓXIMO
+                =================================================== -->
+
+                <button type="button" class="gallery-lightbox-next" id="galleryLightboxNext" aria-label="Próximo momento">
+
+                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+
                 </button>
 
 
-                <div class="gallery-lightbox-counter" id="galleryLightboxCounter">
-                    1 / 4
+                <!-- ==================================================
+                     CONTADOR
+                =================================================== -->
+
+                <div class="gallery-lightbox-counter" id="galleryLightboxCounter" aria-live="polite">
+                    1 / 5
                 </div>
 
             </div>

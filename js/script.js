@@ -588,119 +588,118 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
-
-
     // ==========================================================
     // GALERIA + LIGHTBOX
     // ==========================================================
 
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+
     const galleryItems =
         document.querySelectorAll(".gallery-item");
 
-    const galleryLightbox =
+    const lightbox =
         document.querySelector("#galleryLightbox");
 
-    const galleryLightboxContent =
+    const lightboxContent =
         document.querySelector("#galleryLightboxContent");
 
-    const galleryLightboxClose =
+    const closeButton =
         document.querySelector("#galleryLightboxClose");
 
-    const galleryLightboxPrev =
+    const previousButton =
         document.querySelector("#galleryLightboxPrev");
 
-    const galleryLightboxNext =
+    const nextButton =
         document.querySelector("#galleryLightboxNext");
 
-    const galleryLightboxCounter =
-        document.querySelector("#galleryLightboxCounter");
-
-    const galleryLightboxBackdrop =
+    const backdrop =
         document.querySelector("[data-close-gallery]");
 
-    let currentGalleryIndex = 0;
+    const counter =
+        document.querySelector("#galleryLightboxCounter");
+
+
+    // ----------------------------------------------------------
+    // Verificação
+    // ----------------------------------------------------------
+
+    if (
+        !galleryItems.length ||
+        !lightbox ||
+        !lightboxContent
+    ) {
+        return;
+    }
+
+
+    // ----------------------------------------------------------
+    // Estado
+    // ----------------------------------------------------------
+
+    let currentIndex = 0;
 
 
     // ==========================================================
-    // ABRIR
+    // RENDERIZAR CONTEÚDO
     // ==========================================================
 
-    const openGallery = (index) => {
-
-        if (!galleryLightbox || !galleryItems.length) {
-            return;
-        }
-
-        currentGalleryIndex = index;
-
-        renderGalleryItem();
-
-        galleryLightbox.classList.add("is-open");
-
-        galleryLightbox.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.style.overflow = "hidden";
-
-        galleryLightboxClose?.focus();
-    };
-
-
-    // ==========================================================
-    // RENDERIZAR ITEM
-    // ==========================================================
-
-    const renderGalleryItem = () => {
+    const renderItem = () => {
 
         const item =
-            galleryItems[currentGalleryIndex];
+            galleryItems[currentIndex];
 
-        if (!item || !galleryLightboxContent) {
+        if (!item) {
             return;
         }
+
 
         const type =
             item.dataset.type || "image";
 
-        const src =
+        const source =
             item.dataset.src;
 
-        galleryLightboxContent.innerHTML = "";
+
+        // Limpa conteúdo anterior
+        lightboxContent.innerHTML = "";
 
 
-        // ----------------------------------------------------------
+        // ======================================================
         // IMAGEM
-        // ----------------------------------------------------------
+        // ======================================================
 
         if (type === "image") {
 
             const image =
                 document.createElement("img");
 
-            image.src = src;
+            image.src = source;
 
             image.alt =
                 item.querySelector("img")?.alt ||
                 "Imagem da galeria";
 
-            galleryLightboxContent.appendChild(
+            image.loading = "eager";
+
+            lightboxContent.appendChild(
                 image
             );
+
         }
 
 
-        // ----------------------------------------------------------
+        // ======================================================
         // VÍDEO
-        // ----------------------------------------------------------
+        // ======================================================
 
         if (type === "video") {
 
             const video =
                 document.createElement("video");
 
-            video.src = src;
+            video.src = source;
 
             video.controls = true;
 
@@ -710,47 +709,87 @@ document.addEventListener("DOMContentLoaded", () => {
 
             video.preload = "metadata";
 
-            galleryLightboxContent.appendChild(
+            video.setAttribute(
+                "playsinline",
+                ""
+            );
+
+            video.setAttribute(
+                "webkit-playsinline",
+                ""
+            );
+
+            lightboxContent.appendChild(
                 video
             );
 
+
+            // Alguns navegadores bloqueiam
+            // autoplay. Nesse caso o usuário
+            // poderá apertar play.
+
             video.play().catch(() => { });
+
         }
 
 
-        // ----------------------------------------------------------
+        // ======================================================
         // CONTADOR
-        // ----------------------------------------------------------
+        // ======================================================
 
-        if (galleryLightboxCounter) {
+        if (counter) {
 
-            galleryLightboxCounter.textContent =
-                `${currentGalleryIndex + 1} / ${galleryItems.length}`;
+            counter.textContent =
+                `${currentIndex + 1} / ${galleryItems.length}`;
+
         }
 
     };
 
 
     // ==========================================================
-    // FECHAR
+    // ABRIR LIGHTBOX
     // ==========================================================
 
-    const closeGallery = () => {
+    const openLightbox = (index) => {
 
-        if (!galleryLightbox) {
-            return;
-        }
+        currentIndex = index;
 
-        galleryLightbox.classList.remove(
-            "is-open"
+        renderItem();
+
+        lightbox.classList.add("is-open");
+
+        lightbox.setAttribute(
+            "aria-hidden",
+            "false"
         );
 
-        galleryLightbox.setAttribute(
+        document.body.style.overflow = "hidden";
+
+        closeButton?.focus();
+
+    };
+
+
+    // ==========================================================
+    // FECHAR LIGHTBOX
+    // ==========================================================
+
+    const closeLightbox = () => {
+
+        lightbox.classList.remove("is-open");
+
+        lightbox.setAttribute(
             "aria-hidden",
             "true"
         );
 
-        galleryLightboxContent.innerHTML = "";
+
+        // Remove o vídeo da página.
+        // Isso também interrompe a reprodução.
+
+        lightboxContent.innerHTML = "";
+
 
         document.body.style.overflow = "";
 
@@ -761,13 +800,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // PRÓXIMO
     // ==========================================================
 
-    const nextGalleryItem = () => {
+    const nextItem = () => {
 
-        currentGalleryIndex =
-            (currentGalleryIndex + 1) %
+        currentIndex =
+            (currentIndex + 1) %
             galleryItems.length;
 
-        renderGalleryItem();
+        renderItem();
+
     };
 
 
@@ -775,22 +815,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // ANTERIOR
     // ==========================================================
 
-    const previousGalleryItem = () => {
+    const previousItem = () => {
 
-        currentGalleryIndex =
+        currentIndex =
             (
-                currentGalleryIndex -
+                currentIndex -
                 1 +
                 galleryItems.length
             ) %
             galleryItems.length;
 
-        renderGalleryItem();
+        renderItem();
+
     };
 
 
     // ==========================================================
-    // CLIQUE NAS FOTOS
+    // CLIQUE NAS FOTOS / VÍDEOS
     // ==========================================================
 
     galleryItems.forEach(
@@ -800,7 +841,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "click",
                 () => {
 
-                    openGallery(index);
+                    openLightbox(index);
 
                 }
             );
@@ -810,27 +851,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ==========================================================
-    // CONTROLES
+    // BOTÃO FECHAR
     // ==========================================================
 
-    galleryLightboxClose?.addEventListener(
+    closeButton?.addEventListener(
         "click",
-        closeGallery
+        closeLightbox
     );
 
-    galleryLightboxBackdrop?.addEventListener(
+
+    // ==========================================================
+    // CLICAR FORA
+    // ==========================================================
+
+    backdrop?.addEventListener(
         "click",
-        closeGallery
+        closeLightbox
     );
 
-    galleryLightboxNext?.addEventListener(
+
+    // ==========================================================
+    // PRÓXIMO
+    // ==========================================================
+
+    nextButton?.addEventListener(
         "click",
-        nextGalleryItem
+        (event) => {
+
+            event.stopPropagation();
+
+            nextItem();
+
+        }
     );
 
-    galleryLightboxPrev?.addEventListener(
+
+    // ==========================================================
+    // ANTERIOR
+    // ==========================================================
+
+    previousButton?.addEventListener(
         "click",
-        previousGalleryItem
+        (event) => {
+
+            event.stopPropagation();
+
+            previousItem();
+
+        }
     );
 
 
@@ -843,32 +911,34 @@ document.addEventListener("DOMContentLoaded", () => {
         (event) => {
 
             if (
-                !galleryLightbox ||
-                !galleryLightbox.classList.contains("is-open")
+                !lightbox.classList.contains("is-open")
             ) {
                 return;
             }
 
 
+            // ESC
             if (event.key === "Escape") {
 
-                closeGallery();
+                closeLightbox();
 
                 return;
             }
 
 
+            // Direita
             if (event.key === "ArrowRight") {
 
-                nextGalleryItem();
+                nextItem();
 
                 return;
             }
 
 
+            // Esquerda
             if (event.key === "ArrowLeft") {
 
-                previousGalleryItem();
+                previousItem();
 
             }
 
