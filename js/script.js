@@ -1,114 +1,57 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-    // ==========================================================
-    // CONFIGURAÇÕES
-    // ==========================================================
-
-    const WHATSAPP = "5518997765764";
-
-
-    // ==========================================================
-    // ELEMENTOS DO FORMULÁRIO
-    // ==========================================================
-
-    const form = document.querySelector("#eventForm");
+    const WHATSAPP  = "5518997765764";
+    const form      = document.querySelector("#eventForm");
     const dateInput = document.querySelector("#eventDate");
     const formation = document.querySelector("#formation");
-    const errorBox = document.querySelector("#formError");
+    const errorBox  = document.querySelector("#formError");
 
-
-    // ==========================================================
-    // DATA MÍNIMA DO EVENTO
-    // ==========================================================
 
     if (dateInput) {
-
         const now = new Date();
-
         const today = [
             now.getFullYear(),
             String(now.getMonth() + 1).padStart(2, "0"),
             String(now.getDate()).padStart(2, "0")
         ].join("-");
-
         dateInput.min = today;
     }
 
-
-    // ==========================================================
-    // MODAL DO DESENVOLVEDOR
-    // ==========================================================
-
-    const developerModal =
-        document.querySelector("#developerModal");
-
-    const developerDataButton =
-        document.querySelector("#developerDataButton");
-
-    const developerModalClose =
-        document.querySelector("#developerModalClose");
-
-    const developerModalBackdrop =
-        document.querySelector("[data-close-developer]");
-
-
-    // ==========================================================
-    // ABRIR MODAL
-    // ==========================================================
+    const developerModal         = document.querySelector("#developerModal");
+    const developerDataButton    = document.querySelector("#developerDataButton");
+    const developerModalClose    = document.querySelector("#developerModalClose");
+    const developerModalBackdrop = document.querySelector("[data-close-developer]");
 
     const openDeveloperModal = () => {
-
         if (!developerModal) {
             return;
         }
-
         developerModal.classList.add("is-open");
-
         developerModal.setAttribute(
             "aria-hidden",
             "false"
         );
-
         document.body.style.overflow = "hidden";
-
         setTimeout(() => {
-
             if (developerModalClose) {
                 developerModalClose.focus();
             }
-
         }, 50);
     };
 
-
-    // ==========================================================
-    // FECHAR MODAL
-    // ==========================================================
-
     const closeDeveloperModal = () => {
-
         if (!developerModal) {
             return;
         }
-
         developerModal.classList.remove("is-open");
-
         developerModal.setAttribute(
             "aria-hidden",
             "true"
         );
-
         document.body.style.overflow = "";
-
         if (developerDataButton) {
             developerDataButton.focus();
         }
     };
-
-
-    // ==========================================================
-    // EVENTOS DO MODAL
-    // ==========================================================
 
     developerDataButton?.addEventListener(
         "click",
@@ -126,80 +69,32 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-    // ==========================================================
-    // FECHAR MODAL COM ESC
-    // ==========================================================
-
     document.addEventListener("keydown", (event) => {
-
         if (
             event.key === "Escape" &&
             developerModal?.classList.contains("is-open")
         ) {
             closeDeveloperModal();
         }
-
     });
 
-
-    // ==========================================================
-    // NAVEGAÇÃO INTERNA
-    // ==========================================================
-    //
-    // Os links continuam usando href="#id", porém:
-    //
-    // - a página rola suavemente;
-    // - o #id NÃO é colocado na URL;
-    // - não usamos history.pushState();
-    //
-    // ==========================================================
-
-    document
-        .querySelectorAll('a[href^="#"]')
-        .forEach((link) => {
-
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
             link.addEventListener("click", (event) => {
-
                 const href =
                     link.getAttribute("href");
-
-
-                // --------------------------------------------------
-                // Link vazio
-                // --------------------------------------------------
 
                 if (!href || href === "#") {
                     return;
                 }
 
-
-                // --------------------------------------------------
-                // Modal do desenvolvedor
-                // --------------------------------------------------
-
                 if (href === "#desenvolvedor") {
-
                     event.preventDefault();
-
                     openDeveloperModal();
-
                     return;
                 }
 
-
-                // --------------------------------------------------
-                // CONSULTAR DATA
-                // --------------------------------------------------
-                //
-                // Vai diretamente para o formulário.
-                // Depois coloca o foco no campo Nome.
-                //
-                // --------------------------------------------------
-
                 if (href === "#contato") {
-
                     event.preventDefault();
-
                     const contactSection =
                         document.querySelector("#contato");
 
@@ -213,8 +108,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
 
-                    // Aguarda a animação do scroll
-                    // antes de colocar o foco no campo.
                     setTimeout(() => {
 
                         const nameInput =
@@ -229,30 +122,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                // --------------------------------------------------
-                // Localizar seção
-                // --------------------------------------------------
-
-                const target =
-                    document.querySelector(href);
-
+                const target = document.querySelector(href);
 
                 if (!target) {
                     return;
                 }
 
-
-                // --------------------------------------------------
-                // Impede alteração da URL
-                // --------------------------------------------------
-
                 event.preventDefault();
-
-
-                // --------------------------------------------------
-                // Scroll suave
-                // --------------------------------------------------
 
                 target.scrollIntoView({
                     behavior: "smooth",
@@ -262,11 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         });
-
-
-    // ==========================================================
-    // BOTÕES DOS PACOTES
-    // ==========================================================
 
     document
         .querySelectorAll(".select-package")
@@ -278,21 +149,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     button.dataset.package || "";
 
 
-                // --------------------------------------------------
-                // Seleciona o pacote
-                // --------------------------------------------------
-
                 if (formation) {
-
                     formation.value =
                         packageName;
 
                 }
-
-
-                // --------------------------------------------------
-                // Vai para o formulário
-                // --------------------------------------------------
 
                 const contactSection =
                     document.querySelector("#contato");
@@ -309,10 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
 
-                // --------------------------------------------------
-                // Foco no select do pacote
-                // --------------------------------------------------
-
                 setTimeout(() => {
 
                     if (formation) {
@@ -326,16 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
-    // ==========================================================
-    // FORMULÁRIO
-    // ==========================================================
-
-    if (
-        form &&
-        dateInput &&
-        formation &&
-        errorBox
-    ) {
+    if (form && dateInput && formation && errorBox ) {
 
         const fields = [
 
@@ -348,11 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
             formation
 
         ].filter(Boolean);
-
-
-        // ------------------------------------------------------
-        // Limpar erros
-        // ------------------------------------------------------
 
         const clearInvalid = () => {
 
@@ -368,11 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         };
 
-
-        // ------------------------------------------------------
-        // Limpar erros ao preencher
-        // ------------------------------------------------------
-
         fields.forEach((field) => {
 
             field.addEventListener(
@@ -387,11 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         });
 
-
-        // ------------------------------------------------------
-        // Envio do formulário
-        // ------------------------------------------------------
-
         form.addEventListener(
             "submit",
             (event) => {
@@ -399,11 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.preventDefault();
 
                 clearInvalid();
-
-
-                // ----------------------------------------------
-                // Validação
-                // ----------------------------------------------
 
                 if (!form.checkValidity()) {
 
@@ -439,11 +267,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
-                // ----------------------------------------------
-                // Dados do formulário
-                // ----------------------------------------------
-
                 const name =
                     document
                         .querySelector("#name")
@@ -474,10 +297,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     formation.value.trim();
 
 
-                // ----------------------------------------------
-                // Mensagem
-                // ----------------------------------------------
-
                 const message = [
 
                     "Oi! Desejo contratar a equipe para o meu evento.",
@@ -498,18 +317,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 ].join("\n");
 
-
-                // ----------------------------------------------
-                // URL do WhatsApp
-                // ----------------------------------------------
-
                 const url =
                     `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
-
-
-                // ----------------------------------------------
-                // Abrir WhatsApp
-                // ----------------------------------------------
 
                 window.open(
                     url,
@@ -522,10 +331,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    // ==========================================================
-    // REVEAL — ANIMAÇÃO AO ENTRAR NA TELA
-    // ==========================================================
 
     const revealItems =
         document.querySelectorAll(".reveal");
@@ -588,9 +393,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
-    // ==========================================================
-    // GALERIA + LIGHTBOX
-    // ==========================================================
 
 });
 
@@ -621,10 +423,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("#galleryLightboxCounter");
 
 
-    // ----------------------------------------------------------
-    // Verificação
-    // ----------------------------------------------------------
-
     if (
         !galleryItems.length ||
         !lightbox ||
@@ -633,17 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-
-    // ----------------------------------------------------------
-    // Estado
-    // ----------------------------------------------------------
-
     let currentIndex = 0;
-
-
-    // ==========================================================
-    // RENDERIZAR CONTEÚDO
-    // ==========================================================
 
     const renderItem = () => {
 
@@ -665,11 +453,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Limpa conteúdo anterior
         lightboxContent.innerHTML = "";
 
-
-        // ======================================================
-        // IMAGEM
-        // ======================================================
-
         if (type === "image") {
 
             const image =
@@ -688,11 +471,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         }
-
-
-        // ======================================================
-        // VÍDEO
-        // ======================================================
 
         if (type === "video") {
 
@@ -732,11 +510,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
-        // ======================================================
-        // CONTADOR
-        // ======================================================
-
         if (counter) {
 
             counter.textContent =
@@ -745,11 +518,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     };
-
-
-    // ==========================================================
-    // ABRIR LIGHTBOX
-    // ==========================================================
 
     const openLightbox = (index) => {
 
@@ -769,11 +537,6 @@ document.addEventListener("DOMContentLoaded", () => {
         closeButton?.focus();
 
     };
-
-
-    // ==========================================================
-    // FECHAR LIGHTBOX
-    // ==========================================================
 
     const closeLightbox = () => {
 
@@ -795,11 +558,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     };
 
-
-    // ==========================================================
-    // PRÓXIMO
-    // ==========================================================
-
     const nextItem = () => {
 
         currentIndex =
@@ -810,10 +568,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     };
 
-
-    // ==========================================================
-    // ANTERIOR
-    // ==========================================================
 
     const previousItem = () => {
 
@@ -828,11 +582,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderItem();
 
     };
-
-
-    // ==========================================================
-    // CLIQUE NAS FOTOS / VÍDEOS
-    // ==========================================================
 
     galleryItems.forEach(
         (item, index) => {
@@ -849,30 +598,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
-    // ==========================================================
-    // BOTÃO FECHAR
-    // ==========================================================
-
     closeButton?.addEventListener(
         "click",
         closeLightbox
     );
 
 
-    // ==========================================================
-    // CLICAR FORA
-    // ==========================================================
-
     backdrop?.addEventListener(
         "click",
         closeLightbox
     );
-
-
-    // ==========================================================
-    // PRÓXIMO
-    // ==========================================================
 
     nextButton?.addEventListener(
         "click",
@@ -885,11 +620,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
-    // ==========================================================
-    // ANTERIOR
-    // ==========================================================
-
     previousButton?.addEventListener(
         "click",
         (event) => {
@@ -900,11 +630,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
     );
-
-
-    // ==========================================================
-    // TECLADO
-    // ==========================================================
 
     document.addEventListener(
         "keydown",
